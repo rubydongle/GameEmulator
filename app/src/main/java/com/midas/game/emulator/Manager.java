@@ -6,7 +6,7 @@ import com.midas.game.R;
 import com.midas.game.cheats.Cheat;
 import com.midas.game.core.EmulatorUtils;
 import com.midas.game.core.GameDescription;
-import com.midas.game.core.NLog;
+import com.midas.game.core.LogUtils;
 
 import java.io.File;
 
@@ -90,6 +90,6 @@ public class Manager extends EmulatorRunner {
         }
 
         long t2 = System.currentTimeMillis();
-        NLog.e("benchmark", "bechmark: " + (t2 - t1) / 1000f);
+        LogUtils.e("benchmark", "bechmark: " + (t2 - t1) / 1000f);
     }
 }

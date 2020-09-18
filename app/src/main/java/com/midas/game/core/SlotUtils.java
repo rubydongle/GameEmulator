@@ -93,7 +93,7 @@ public class SlotUtils {
                     }
 
                 } catch (OutOfMemoryError e) {
-                    NLog.e(TAG, "", e);
+                    LogUtils.e(TAG, "", e);
                 }
             }
         }

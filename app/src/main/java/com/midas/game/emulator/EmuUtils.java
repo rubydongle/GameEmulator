@@ -21,7 +21,7 @@ import android.view.Display;
 
 import com.midas.game.core.EmulatorUtils;
 import com.midas.game.core.GameDescription;
-import com.midas.game.core.NLog;
+import com.midas.game.core.LogUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,7 +69,7 @@ public class EmuUtils {
             fis = new FileInputStream(file);
             return countMD5(fis);
         } catch (IOException e) {
-            NLog.e(TAG, "", e);
+            LogUtils.e(TAG, "", e);
         } finally {
             try {
                 if (fis != null)
@@ -112,9 +112,9 @@ public class EmuUtils {
                 return "small file";
             }
         } catch (NoSuchAlgorithmException e) {
-            NLog.e(TAG, "", e);
+            LogUtils.e(TAG, "", e);
         } catch (IOException e) {
-            NLog.e(TAG, "", e);
+            LogUtils.e(TAG, "", e);
         }
 
         return "";
@@ -149,7 +149,7 @@ public class EmuUtils {
 
     public static void extractFile(File zipFile, String entryName, File outputFile)
             throws IOException {
-        NLog.i(TAG, "extract " + entryName + " from " + zipFile.getAbsolutePath() + " to "
+        LogUtils.i(TAG, "extract " + entryName + " from " + zipFile.getAbsolutePath() + " to "
                 + outputFile.getAbsolutePath());
         ZipFile zipFile2 = new ZipFile(zipFile);
         ZipEntry ze = zipFile2.getEntry(entryName);
@@ -328,8 +328,8 @@ public class EmuUtils {
                 netmask |= 1 << (n);
                 n--;
             }
-            NLog.e("netmask", len + "");
-            NLog.e("netmask", netmask + "");
+            LogUtils.e("netmask", len + "");
+            LogUtils.e("netmask", netmask + "");
         }
     }
 }

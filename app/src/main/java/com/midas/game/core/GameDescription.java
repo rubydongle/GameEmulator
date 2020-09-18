@@ -1,6 +1,5 @@
 package com.midas.game.core;
 
-
 import androidx.annotation.NonNull;
 
 import com.midas.game.core.annotations.Column;

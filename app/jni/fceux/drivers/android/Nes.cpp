@@ -44,7 +44,7 @@ public:
     }
 
     bool setBatterySaveDir(const char *path) {
-        NOSTALGIA_SetBatterySaveDir(path);
+//        NOSTALGIA_SetBatterySaveDir(path);
         return true;
     }
 
@@ -66,7 +66,7 @@ public:
                 generalInit -= 1000;
             }
 
-            disableBatterySaving = !saveSavFiles;
+//            disableBatterySaving = !saveSavFiles;
             loadSavFiles = generalInit >= 100;
 
             if (generalInit >= 100) {
@@ -332,7 +332,7 @@ public:
         }
 
         if (batterySaveDir != 0) {
-            NOSTALGIA_SetBatterySaveDir(batterySaveDir);
+//            NOSTALGIA_SetBatterySaveDir(batterySaveDir);
         }
 
         game = FCEUI_LoadGame(path, 0);
@@ -385,8 +385,8 @@ Bridge bridge(&emulator);
 }
 
 
-bool turbo = 0;
-int closeFinishedMovie = 0;
+//bool turbo = 0;
+//int closeFinishedMovie = 0;
 
 uint64 FCEUD_GetTime(void) {
     uint64 ticks;

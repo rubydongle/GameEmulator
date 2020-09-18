@@ -77,8 +77,11 @@ extern void RefreshThrottleFPS();
 #else
 #ifdef __QT_DRIVER__
 #include "drivers/Qt/sdl.h"
+#elif ANDROID
+#include "driver.h"
+#include "drivers/android/wrapper.h"
 #else
-#include "drivers/sdl/sdl.h"
+//#include "drivers/sdl/sdl.h"
 #endif
 #endif
 

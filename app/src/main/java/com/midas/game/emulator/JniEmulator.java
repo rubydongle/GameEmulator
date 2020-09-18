@@ -9,7 +9,7 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 
 import com.midas.game.R;
-import com.midas.game.core.NLog;
+import com.midas.game.core.LogUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -194,7 +194,7 @@ public abstract class JniEmulator implements Emulator {
                 }
             }
             File file = new File(pngFileName);
-            NLog.i(TAG, "SCREEN: " + file.length());
+            LogUtils.i(TAG, "SCREEN: " + file.length());
             screen.recycle();
         } else {
             throw new EmulatorException(R.string.act_game_screenshot_failed);
@@ -294,7 +294,7 @@ public abstract class JniEmulator implements Emulator {
 
             if (bitmap != null) {
                 bitmap.recycle();
-                NLog.d(TAG, "bitmap recycled");
+                LogUtils.d(TAG, "bitmap recycled");
             }
             if (track != null) {
                 track.flush();
@@ -474,7 +474,7 @@ public abstract class JniEmulator implements Emulator {
             throw new EmulatorException("sound init failed");
         }
 
-        NLog.d(TAG, "sound init OK");
+        LogUtils.d(TAG, "sound init OK");
     }
 
     private String getMD5(String path) {

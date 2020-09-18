@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.midas.game.core.NLog;
+import com.midas.game.core.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -61,7 +61,7 @@ public class Cheat {
             icomp = Integer.parseInt(comp, 16);
         }
 
-        NLog.i("cheat", "cheat " + valuesToRaw(iaddr, ival, icomp));
+        LogUtils.i("cheat", "cheat " + valuesToRaw(iaddr, ival, icomp));
         return new int[]{iaddr, ival, icomp};
     }
 

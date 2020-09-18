@@ -7,7 +7,7 @@ public class Core extends JniBridge {
     private static Core instance = new Core();
 
     static {
-        System.loadLibrary("nes");
+        System.loadLibrary("fceux");
     }
 
     private Core() {

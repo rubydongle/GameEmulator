@@ -1,16 +1,9 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-
-LOCAL_MODULE := main
-
+LOCAL_MODULE := fceux
 LOCAL_C_INCLUDES := $(LOCAL_PATH) $(LOCAL_PATH)/drivers
-
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
-
-SDL_PATH := ../SDL
-
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(SDL_PATH)/include
 
 LOCAL_SRC_FILES := \
 	${LOCAL_PATH}/asm.cpp \
@@ -234,8 +227,10 @@ LOCAL_SRC_FILES := \
   	${LOCAL_PATH}/utils/endian.cpp \
   	${LOCAL_PATH}/utils/general.cpp \
   	${LOCAL_PATH}/utils/guid.cpp \
+	${LOCAL_PATH}/utils/ioapi.cpp \
   	${LOCAL_PATH}/utils/md5.cpp \
   	${LOCAL_PATH}/utils/memory.cpp \
+	${LOCAL_PATH}/utils/unzip.cpp \
 	${LOCAL_PATH}/drivers/common/args.cpp \
 	${LOCAL_PATH}/drivers/common/cheat.cpp \
 	${LOCAL_PATH}/drivers/common/config.cpp \
@@ -248,23 +243,15 @@ LOCAL_SRC_FILES := \
 	${LOCAL_PATH}/drivers/common/vidblit.cpp \
 	${LOCAL_PATH}/drivers/common/os_utils.cpp \
 	${LOCAL_PATH}/drivers/common/nes_ntsc.c \
-	${LOCAL_PATH}/drivers/videolog/nesvideos-piece.cpp \
-	${LOCAL_PATH}/drivers/videolog/rgbtorgb.cpp \
-	${LOCAL_PATH}/drivers/sdl-android/config.cpp \
-	${LOCAL_PATH}/drivers/sdl-android/input.cpp  \
-	${LOCAL_PATH}/drivers/sdl-android/sdl-joystick.cpp \
-	${LOCAL_PATH}/drivers/sdl-android/sdl-throttle.cpp \
-	${LOCAL_PATH}/drivers/sdl-android/unix-netplay.cpp \
-    ${LOCAL_PATH}/drivers/sdl-android/sdl.cpp \
-	${LOCAL_PATH}/drivers/sdl-android/sdl-sound.cpp   \
-	${LOCAL_PATH}/drivers/sdl-android/sdl-video.cpp \
-	#${LOCAL_PATH}/drivers/sdl-android/sdl-netplay.cpp  \
-	#${LOCAL_PATH}/drivers/sdl-android/sdl-opengl.cpp \
+	${LOCAL_PATH}/drivers/android/wrapper.cpp \
+	${LOCAL_PATH}/drivers/android/Bridge.cpp \
+	${LOCAL_PATH}/drivers/android/Emulator.cpp \
+	${LOCAL_PATH}/drivers/android/Nes.cpp \
 
-LOCAL_SHARED_LIBRARIES := SDL2 zlib nes
+LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog -ljnigraphics -lz
 
 LOCAL_SHORT_COMMANDS := true
-LOCAL_CFLAGS += -DPSS_STYLE=1 -DHAVE_ASPRINTF
+LOCAL_CFLAGS += -DPSS_STYLE=1 -DHAVE_ASPRINTF -DIOAPI_NO_64
 LOCAL_CFLAGS += \
     -frtti \
     -Wall  -Wno-write-strings  \
@@ -275,69 +262,8 @@ LOCAL_CFLAGS += \
     -Wno-c++11-narrowing \
     -Wno-unused-variable \
 
-LOCAL_CPPFLAGS += -fexceptions
-
-LOCAL_LDLIBS := -ldl -lGLESv1_CM -lGLESv2 -landroid
-
-# -lz -lm
-#-lrt
-#-lpthread
-
-#ifeq ($(NDK_DEBUG),1)
-#    cmd-strip :=
-#endif
-
-#LOCAL_STATIC_LIBRARIES := cpufeatures
+LOCAL_CPPFLAGS += -DPSS_STYLE=1 -DHAVE_ASPRINTF -DLSB_FIRST -DFRAMESKIP -DIOAPI_NO_64 -D_STLP_HAS_WCHAR_T -D_GLIBCXX_USE_WCHAR_T \
+	-Wno-write-strings -Ofast -fexceptions -frtti -fno-builtin-sin -fno-builtin-cos -Wpointer-arith \
+	-fmerge-all-constants -fvisibility=hidden -fvisibility-inlines-hidden -funroll-loops  -ffast-math \
 
 include $(BUILD_SHARED_LIBRARY)
-
-###########################
-#
-# SDL static library
-#
-###########################
-
-#LOCAL_MODULE := SDL2_static
-
-#LOCAL_MODULE_FILENAME := libSDL2
-
-#LOCAL_LDLIBS :=
-#LOCAL_EXPORT_LDLIBS := -ldl -lGLESv1_CM -lGLESv2 -llog -landroid
-
-#include $(BUILD_STATIC_LIBRARY)
-
-###########################
-#
-# SDL main static library
-#
-###########################
-
-#include $(CLEAR_VARS)
-
-#LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
-
-#LOCAL_MODULE := SDL2_main
-
-#LOCAL_MODULE_FILENAME := libSDL2main
-
-#include $(BUILD_STATIC_LIBRARY)
-
-###########################
-#
-# hidapi library
-#
-###########################
-
-#include $(CLEAR_VARS)
-
-#LOCAL_CPPFLAGS += -std=c++11
-
-#LOCAL_SRC_FILES := src/hidapi/android/hid.cpp
-
-#LOCAL_MODULE := libhidapi
-#LOCAL_LDLIBS := -llog
-
-#include $(BUILD_SHARED_LIBRARY)
-
-#$(call import-module,android/cpufeatures)
-

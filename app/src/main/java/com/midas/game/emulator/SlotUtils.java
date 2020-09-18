@@ -7,7 +7,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 
-import com.midas.game.core.NLog;
+import com.midas.game.core.LogUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class SlotUtils {
                     }
 
                 } catch (OutOfMemoryError e) {
-                    NLog.e(TAG, "", e);
+                    LogUtils.e(TAG, "", e);
                 }
             }
         }

@@ -6,7 +6,7 @@ import android.os.Process;
 
 import com.midas.game.core.EmulatorUtils;
 import com.midas.game.core.GameDescription;
-import com.midas.game.core.NLog;
+import com.midas.game.core.LogUtils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -61,7 +61,7 @@ public class EmulatorRunner {
             try {
                 FileUtils.copyFile(source, dest);
                 source.delete();
-                NLog.d("SAV", "copying: " + source + " " + dest);
+                LogUtils.d("SAV", "copying: " + source + " " + dest);
 
             } catch (Exception ignored) {
             }
@@ -87,7 +87,7 @@ public class EmulatorRunner {
     public void pauseEmulation() {
         synchronized (pauseLock) {
             if (!isPaused.get()) {
-                NLog.i(TAG, "--PAUSE EMULATION--");
+                LogUtils.i(TAG, "--PAUSE EMULATION--");
                 isPaused.set(true);
                 emulator.onEmulationPaused();
                 updater.pause();
@@ -99,7 +99,7 @@ public class EmulatorRunner {
     public void resumeEmulation() {
         synchronized (pauseLock) {
             if (isPaused.get()) {
-                NLog.i(TAG, "--UNPAUSE EMULATION--");
+                LogUtils.i(TAG, "--UNPAUSE EMULATION--");
                 emulator.onEmulationResumed();
                 updater.unpause();
                 isPaused.set(false);
@@ -162,7 +162,7 @@ public class EmulatorRunner {
             audioEnabled = sfx != null;
             emulator.start(gfx, sfx, settings);
             String battery = context.getExternalCacheDir().getAbsolutePath();
-            NLog.e("bat", battery);
+            LogUtils.e("bat", battery);
             BatterySaveUtils.createSavFileCopyIfNeeded(context, game.path);
             String batteryDir = BatterySaveUtils.getBatterySaveDir(context, game.path);
             String possibleBatteryFileFullPath = batteryDir + "/"
@@ -274,7 +274,7 @@ public class EmulatorRunner {
         public void run() {
             Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
             setName("emudroid:gameLoop #" + (int) (Math.random() * 1000));
-            NLog.i(TAG, getName() + " started");
+            LogUtils.i(TAG, getName() + " started");
             long skippedTime = 0;
             totalSkipped = 0;
             unpause();
@@ -364,7 +364,7 @@ public class EmulatorRunner {
                 expectedTimeE1 += exactDelayPerFrameE1;
             }
 
-            NLog.i(TAG, getName() + " finished");
+            LogUtils.i(TAG, getName() + " finished");
         }
 
         public void unpause() {

@@ -10,7 +10,7 @@ import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.view.View;
 
-import com.midas.game.core.NLog;
+import com.midas.game.core.LogUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -117,14 +117,14 @@ class OpenGLView extends GLSurfaceView implements EmulatorView {
             textureSize = 256;
             this.paddingLeft = paddingLeft;
             this.paddingTop = paddingTop;
-            NLog.i("SHADER", "shader: " + shader);
+            LogUtils.i("SHADER", "shader: " + shader);
             fragmentShaderCode = shader;
         }
 
         private static void checkGlError(String glOperation) {
             int error;
             while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-                NLog.e(TAG, glOperation + ": glError " + error);
+                LogUtils.e(TAG, glOperation + ": glError " + error);
                 throw new RuntimeException(glOperation + ": glError " + error);
             }
         }
