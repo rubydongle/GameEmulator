@@ -1,15 +1,13 @@
-package com.midas.game.emulator;
+package com.midas.game.widget;
 
 import android.view.View;
 
-public interface EmulatorView {
+import com.midas.game.emulator.ViewPort;
+
+public interface IEmulatorView {
     void onPause();
-
     void onResume();
-
     void setQuality(int quality);
-
     ViewPort getViewPort();
-
     View asView();
 }

@@ -1,4 +1,4 @@
-package com.midas.game.emulator;
+package com.midas.game.widget;
 
 import android.app.Activity;
 import android.app.Application;
@@ -6,19 +6,23 @@ import android.graphics.Canvas;
 import android.view.SurfaceView;
 import android.view.View;
 
-class UnacceleratedView extends SurfaceView implements EmulatorView {
+import com.midas.game.emulator.IEmulator;
+import com.midas.game.emulator.ViewPort;
+import com.midas.game.emulator.ViewUtils;
+
+public class UnacceleratedView extends SurfaceView implements IEmulatorView {
 
     private static final int DELAY_PER_FRAME = 40;
     private Application context;
     private long startTime;
     private int x;
     private int y;
-    private Emulator emulator;
+    private IEmulator emulator;
     private int paddingTop;
     private int paddingLeft;
     private ViewPort viewPort;
 
-    public UnacceleratedView(Activity context, Emulator emulator, int paddingLeft, int paddingTop) {
+    public UnacceleratedView(Activity context, IEmulator emulator, int paddingLeft, int paddingTop) {
         super(context);
         this.emulator = emulator;
         this.context = context.getApplication();

@@ -9,7 +9,8 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 
 import com.midas.game.R;
-import com.midas.game.core.LogUtils;
+import com.midas.game.core.GameDescription;
+import com.midas.game.utils.LogUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,7 +19,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class JniEmulator implements Emulator {
+public abstract class JniEmulator implements IEmulator {
     private static final String TAG = "JniEmulator";
     private static final int SIZE = 32768 * 2;
     private static Map<String, String> md5s = new HashMap<>();
@@ -50,7 +51,7 @@ public abstract class JniEmulator implements Emulator {
     private int viewPortHeight;
 
     public JniEmulator() {
-        EmulatorInfo info = getInfo();
+        IEmulatorInfo info = getInfo();
         KeyboardProfile.BUTTON_NAMES = info.getDeviceKeyboardNames();
         KeyboardProfile.BUTTON_KEY_EVENT_CODES = info.getDeviceKeyboardCodes();
         KeyboardProfile.BUTTON_DESCRIPTIONS = info.getDeviceKeyboardDescriptions();
@@ -59,11 +60,11 @@ public abstract class JniEmulator implements Emulator {
 
     public abstract JniBridge getBridge();
 
-//    @Override
-//    public abstract GfxProfile autoDetectGfx(GameDescription game);
-//
-//    @Override
-//    public abstract SfxProfile autoDetectSfx(GameDescription game);
+    @Override
+    public abstract GfxProfile autoDetectGfx(GameDescription game);
+
+    @Override
+    public abstract SfxProfile autoDetectSfx(GameDescription game);
 
     @Override
     public int getHistoryItemCount() {

@@ -1,6 +1,6 @@
 package com.midas.game.emulator;
 
-abstract public class BasicEmulatorInfo implements EmulatorInfo {
+abstract public class BasicEmulatorInfo implements IEmulatorInfo {
     public boolean hasZapper() {
         return true;
     }
@@ -16,12 +16,12 @@ abstract public class BasicEmulatorInfo implements EmulatorInfo {
 
     @Override
     public int[] getDeviceKeyboardCodes() {
-        int[] base = new int[]{EmulatorController.KEY_UP,
-                EmulatorController.KEY_DOWN, EmulatorController.KEY_RIGHT,
-                EmulatorController.KEY_LEFT, EmulatorController.KEY_START,
-                EmulatorController.KEY_SELECT, EmulatorController.KEY_A,
-                EmulatorController.KEY_B, EmulatorController.KEY_A_TURBO,
-                EmulatorController.KEY_B_TURBO,
+        int[] base = new int[]{IEmulatorController.KEY_UP,
+                IEmulatorController.KEY_DOWN, IEmulatorController.KEY_RIGHT,
+                IEmulatorController.KEY_LEFT, IEmulatorController.KEY_START,
+                IEmulatorController.KEY_SELECT, IEmulatorController.KEY_A,
+                IEmulatorController.KEY_B, IEmulatorController.KEY_A_TURBO,
+                IEmulatorController.KEY_B_TURBO,
 
 //                KeyboardController.KEYS_LEFT_AND_UP,
 //                KeyboardController.KEYS_RIGHT_AND_UP,

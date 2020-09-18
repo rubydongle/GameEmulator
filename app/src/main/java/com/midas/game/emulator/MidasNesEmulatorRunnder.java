@@ -6,13 +6,14 @@ import com.midas.game.R;
 import com.midas.game.cheats.Cheat;
 import com.midas.game.core.EmulatorUtils;
 import com.midas.game.core.GameDescription;
-import com.midas.game.core.LogUtils;
+import com.midas.game.utils.FileUtils;
+import com.midas.game.utils.LogUtils;
 
 import java.io.File;
 
-public class Manager extends EmulatorRunner {
+public class MidasNesEmulatorRunnder extends EmulatorRunner {
 
-    public Manager(Emulator emulator, Context context) {
+    public MidasNesEmulatorRunnder(IEmulator emulator, Context context) {
         super(emulator, context);
     }
 

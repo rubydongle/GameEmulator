@@ -1,6 +1,5 @@
-package com.midas.game.emulator;
+package com.midas.game.widget;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -10,7 +9,13 @@ import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.view.View;
 
-import com.midas.game.core.LogUtils;
+import com.midas.game.emulator.Benchmark;
+import com.midas.game.emulator.IEmulator;
+import com.midas.game.emulator.GfxProfile;
+import com.midas.game.emulator.NesGameActivity;
+import com.midas.game.emulator.ViewPort;
+import com.midas.game.emulator.ViewUtils;
+import com.midas.game.utils.LogUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -20,13 +25,11 @@ import java.nio.ShortBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-
-@SuppressLint("ViewConstructor")
-class OpenGLView extends GLSurfaceView implements EmulatorView {
+public class OpenGLView extends GLSurfaceView implements IEmulatorView {
     private static final String TAG = "base.OpenGLView";
     private final Renderer renderer;
 
-    public OpenGLView(NesGameActivity context, Emulator emulator, int paddingLeft,
+    public OpenGLView(NesGameActivity context, IEmulator emulator, int paddingLeft,
                       int paddingTop, String shader) {
         super(context);
         setEGLContextClientVersion(2);
@@ -96,7 +99,7 @@ class OpenGLView extends GLSurfaceView implements EmulatorView {
         private int paletteTextureId;
         private long startTime;
         private int program;
-        private Emulator emulator;
+        private IEmulator emulator;
         private float[] quadCoords;
         private float[] textureCoords;
         private float[] projMatrix = new float[16];
@@ -107,7 +110,7 @@ class OpenGLView extends GLSurfaceView implements EmulatorView {
         private int paddingLeft;
         private int paddingTop;
 
-        public Renderer(NesGameActivity context, Emulator emulator, int paddingLeft,
+        public Renderer(NesGameActivity context, IEmulator emulator, int paddingLeft,
                         int paddingTop, String shader) {
 
             this.emulator = emulator;
@@ -250,7 +253,7 @@ class OpenGLView extends GLSurfaceView implements EmulatorView {
             checkGlError("disable vertex arrays");
         }
 
-        private void initQuadCoordinates(Emulator emulator, int width, int height) {
+        private void initQuadCoordinates(IEmulator emulator, int width, int height) {
             int maxTexX;
             int maxTexY;
 

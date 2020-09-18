@@ -21,7 +21,7 @@ import android.view.Display;
 
 import com.midas.game.core.EmulatorUtils;
 import com.midas.game.core.GameDescription;
-import com.midas.game.core.LogUtils;
+import com.midas.game.utils.LogUtils;
 
 import java.io.File;
 import java.io.FileInputStream;

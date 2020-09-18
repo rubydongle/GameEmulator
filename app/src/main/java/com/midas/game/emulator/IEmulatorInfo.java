@@ -4,7 +4,7 @@ import android.util.SparseIntArray;
 
 import java.util.List;
 
-public interface EmulatorInfo {
+public interface IEmulatorInfo {
 
     String getName();
 

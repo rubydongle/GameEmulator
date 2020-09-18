@@ -13,7 +13,7 @@ import java.util.List;
 public class MidasNesEmulator extends JniEmulator {
 
     public static final String PACK_SUFFIX = "nness";
-    private static EmulatorInfo info;
+    private static IEmulatorInfo info;
     private static MidasNesEmulator instance;
     public String[] palExclusiveKeywords = new String[]{".beauty|beast",
             ".hammerin|harry", ".noah|ark", ".rockets|rivals",
@@ -97,7 +97,7 @@ public class MidasNesEmulator extends JniEmulator {
     }
 
     @Override
-    public EmulatorInfo getInfo() {
+    public IEmulatorInfo getInfo() {
         if (info == null) {
             info = new Info();
         }
@@ -160,16 +160,16 @@ public class MidasNesEmulator extends JniEmulator {
         @Override
         public SparseIntArray getKeyMapping() {
             SparseIntArray mapping = new SparseIntArray();
-            mapping.put(EmulatorController.KEY_A, 0x01);
-            mapping.put(EmulatorController.KEY_B, 0x02);
-            mapping.put(EmulatorController.KEY_SELECT, 0x04);
-            mapping.put(EmulatorController.KEY_START, 0x08);
-            mapping.put(EmulatorController.KEY_UP, 0x10);
-            mapping.put(EmulatorController.KEY_DOWN, 0x20);
-            mapping.put(EmulatorController.KEY_LEFT, 0x40);
-            mapping.put(EmulatorController.KEY_RIGHT, 0x80);
-            mapping.put(EmulatorController.KEY_A_TURBO, 0x01 + 1000);
-            mapping.put(EmulatorController.KEY_B_TURBO, 0x02 + 1000);
+            mapping.put(IEmulatorController.KEY_A, 0x01);
+            mapping.put(IEmulatorController.KEY_B, 0x02);
+            mapping.put(IEmulatorController.KEY_SELECT, 0x04);
+            mapping.put(IEmulatorController.KEY_START, 0x08);
+            mapping.put(IEmulatorController.KEY_UP, 0x10);
+            mapping.put(IEmulatorController.KEY_DOWN, 0x20);
+            mapping.put(IEmulatorController.KEY_LEFT, 0x40);
+            mapping.put(IEmulatorController.KEY_RIGHT, 0x80);
+            mapping.put(IEmulatorController.KEY_A_TURBO, 0x01 + 1000);
+            mapping.put(IEmulatorController.KEY_B_TURBO, 0x02 + 1000);
             return mapping;
         }
 

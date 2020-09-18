@@ -3,9 +3,8 @@ package com.midas.game;
 import android.os.Bundle;
 
 import com.midas.game.core.GameDescription;
-import com.midas.game.emulator.Emulator;
-import com.midas.game.emulator.MidasNesEmulator;
 import com.midas.game.emulator.NesGameActivity;
+import com.midas.game.utils.Utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GameActivity2 extends NesGameActivity {
+public class MidasNesActivity extends NesGameActivity {
     private static String sGameName = "魂斗罗1中文无限命.nes";
 
     @Override

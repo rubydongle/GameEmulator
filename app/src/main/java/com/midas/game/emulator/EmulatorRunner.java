@@ -6,7 +6,8 @@ import android.os.Process;
 
 import com.midas.game.core.EmulatorUtils;
 import com.midas.game.core.GameDescription;
-import com.midas.game.core.LogUtils;
+import com.midas.game.utils.FileUtils;
+import com.midas.game.utils.LogUtils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -18,7 +19,7 @@ public class EmulatorRunner {
     private static final String TAG = "EmulatorRunner";
     private static final int AUTO_SAVE_SLOT = 0;
     protected final Object lock = new Object();
-    protected Emulator emulator;
+    protected IEmulator emulator;
     protected Context context;
     private Object pauseLock = new Object();
     private boolean audioEnabled;
@@ -30,7 +31,7 @@ public class EmulatorRunner {
     private EmulatorThread updater;
     private OnNotRespondingListener notRespondingListener;
 
-    public EmulatorRunner(Emulator emulator, Context context) {
+    public EmulatorRunner(IEmulator emulator, Context context) {
         this.emulator = emulator;
         emulator.setBaseDir(EmulatorUtils.getBaseDir(context));
         this.context = context;

@@ -2,40 +2,37 @@ package com.midas.game.core;
 
 import androidx.annotation.NonNull;
 
-import com.midas.game.core.annotations.Column;
-import com.midas.game.core.annotations.Table;
-
 import java.io.File;
 import java.io.Serializable;
 
 
-@Table
+//@Table
 public class GameDescription implements Serializable, Comparable<GameDescription> {
 
     private static final long serialVersionUID = -4166819653487858374L;
 
-    @Column(hasIndex = true)
+//    @Column(hasIndex = true)
     public String name = "";
 
-    @Column
+//    @Column
     public String path = "";
 
-    @Column(hasIndex = true)
+//    @Column(hasIndex = true)
     public String checksum = "";
 
-    @Column(isPrimaryKey = true)
+//    @Column(isPrimaryKey = true)
     public long _id;
 
-    @Column
+//    @Column
     public long zipfile_id = -1;
 
-    @Column(hasIndex = true)
+//    @Column(hasIndex = true)
     public long inserTime = 0;
 
-    @Column(hasIndex = true)
+//    @Column(hasIndex = true)
     public long lastGameTime = 0;
 
-    @Column
+//    @Column
     public int runCount = 0;
     private String cleanNameCache = null;
     private String sortNameCache = null;

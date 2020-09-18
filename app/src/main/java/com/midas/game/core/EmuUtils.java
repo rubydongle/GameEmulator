@@ -18,6 +18,8 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.view.Display;
 
+import com.midas.game.utils.LogUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

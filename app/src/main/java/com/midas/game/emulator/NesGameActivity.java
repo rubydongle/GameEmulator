@@ -16,6 +16,9 @@ import com.midas.game.R;
 import com.midas.game.core.EmuUtils;
 import com.midas.game.core.EmulatorUtils;
 import com.midas.game.core.GameDescription;
+import com.midas.game.widget.IEmulatorView;
+import com.midas.game.widget.OpenGLView;
+import com.midas.game.widget.UnacceleratedView;
 
 public class NesGameActivity extends Activity implements GameMenu.OnGameMenuListener, EmulatorRunner.OnNotRespondingListener {
 
@@ -34,9 +37,9 @@ public class NesGameActivity extends Activity implements GameMenu.OnGameMenuList
 
     private String mBaseDir;
     private GameMenu mGameMenu;
-    private EmulatorView mEmulatorView;
+    private IEmulatorView mEmulatorView;
 
-    private Manager mManager;
+    private MidasNesEmulatorRunnder mMidasNesEmulatorRunnder;
 
     String shader1 = "precision mediump float;"
             + "varying vec2 v_texCoord;"
@@ -112,7 +115,7 @@ public class NesGameActivity extends Activity implements GameMenu.OnGameMenuList
         wParams.flags |= WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
         getWindow().setAttributes(wParams);
 
-        Emulator emulator = MidasNesEmulator.getInstance();
+        IEmulator emulator = MidasNesEmulator.getInstance();
 
         int paddingLeft = 0;
         int paddingTop = 0;
@@ -144,8 +147,8 @@ public class NesGameActivity extends Activity implements GameMenu.OnGameMenuList
         mEmulatorView = openGLView != null ? openGLView :
                 new UnacceleratedView(this, emulator, paddingLeft, paddingTop);
 
-        mManager =new Manager(emulator, getApplicationContext());
-        mManager.setOnNotRespondingListener(this);
+        mMidasNesEmulatorRunnder =new MidasNesEmulatorRunnder(emulator, getApplicationContext());
+        mMidasNesEmulatorRunnder.setOnNotRespondingListener(this);
 
         mGroup = new FrameLayout(this);
         Display display = getWindowManager().getDefaultDisplay();
@@ -161,7 +164,7 @@ public class NesGameActivity extends Activity implements GameMenu.OnGameMenuList
         setContentView(mGroup);
 
         if (needsBenchmark) {
-            mManager.setBenchmark(new Benchmark(EMULATION_BENCHMARK, 1000, benchmarkCallback));
+            mMidasNesEmulatorRunnder.setBenchmark(new Benchmark(EMULATION_BENCHMARK, 1000, benchmarkCallback));
         }
     }
 
@@ -173,7 +176,7 @@ public class NesGameActivity extends Activity implements GameMenu.OnGameMenuList
     protected void onResume() {
         super.onResume();
 
-        mManager.startGame(mGame);
+        mMidasNesEmulatorRunnder.startGame(mGame);
 
         int quality = PreferenceUtil.getEmulationQuality(this);
         mEmulatorView.setQuality(quality);
@@ -183,13 +186,13 @@ public class NesGameActivity extends Activity implements GameMenu.OnGameMenuList
     @Override
     protected void onPause() {
         super.onPause();
-        mManager.stopGame();
+        mMidasNesEmulatorRunnder.stopGame();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mManager.destroy();
+        mMidasNesEmulatorRunnder.destroy();
     }
 
     protected void setGame(GameDescription gameDescription) {
@@ -204,7 +207,7 @@ public class NesGameActivity extends Activity implements GameMenu.OnGameMenuList
         return true;
     }
 
-    public int[] getTextureBounds(Emulator emulator) {
+    public int[] getTextureBounds(IEmulator emulator) {
         return null;
     }
 

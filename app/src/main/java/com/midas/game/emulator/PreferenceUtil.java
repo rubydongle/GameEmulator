@@ -298,7 +298,7 @@ public class PreferenceUtil {
         return pref.getInt("game_pref_ui_strong_vibration", 0) * 10;
     }
 
-    public static GfxProfile getVideoProfile(Context context, Emulator emulator, GameDescription game) {
+    public static GfxProfile getVideoProfile(Context context, IEmulator emulator, GameDescription game) {
         String gfxProfileName = getVideoMode(context, emulator, game.checksum);
         GfxProfile gfx = null;
         if (gfxProfileName != null) {
@@ -339,7 +339,7 @@ public class PreferenceUtil {
         edit.apply();
     }
 
-    public static String getVideoMode(Context context, Emulator emulator,
+    public static String getVideoMode(Context context, IEmulator emulator,
                                       String gameHash) {
         if (gameHash == null) {
             return null;
@@ -351,7 +351,7 @@ public class PreferenceUtil {
         }
     }
 
-    private static String getVideoMode(Context context, Emulator emulator, SharedPreferences pref) {
+    private static String getVideoMode(Context context, IEmulator emulator, SharedPreferences pref) {
         return pref.getString("game_pref_ui_pal_ntsc_switch", null);
     }
 

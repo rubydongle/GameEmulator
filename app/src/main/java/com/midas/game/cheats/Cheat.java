@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.midas.game.core.LogUtils;
+import com.midas.game.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Map;

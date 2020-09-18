@@ -5,13 +5,13 @@ import java.lang.reflect.Method;
 public class EmulatorHolder {
 
     private static Class<? extends JniEmulator> emulatorClass;
-    private static EmulatorInfo info;
+    private static IEmulatorInfo info;
 
     public static void setEmulatorClass(Class<? extends JniEmulator> emulatorClass) {
         EmulatorHolder.emulatorClass = emulatorClass;
     }
 
-    public static EmulatorInfo getInfo() {
+    public static IEmulatorInfo getInfo() {
         if (info == null) {
             try {
                 Method getInstance = emulatorClass.getMethod("getInstance");

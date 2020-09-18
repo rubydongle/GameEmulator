@@ -5,9 +5,9 @@ import android.graphics.Canvas;
 
 import com.midas.game.core.GameDescription;
 
-public interface Emulator {
+public interface IEmulator {
 
-    EmulatorInfo getInfo();
+    IEmulatorInfo getInfo();
     void start(GfxProfile cfg, SfxProfile sfx, EmulatorSettings settings);
     GfxProfile getActiveGfxProfile();
     SfxProfile getActiveSfxProfile();

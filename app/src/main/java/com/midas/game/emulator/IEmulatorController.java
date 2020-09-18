@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.midas.game.core.GameDescription;
 
-public interface EmulatorController {
+public interface IEmulatorController {
 
     int KEY_A = 0;
     int KEY_B = 1;
@@ -26,7 +26,7 @@ public interface EmulatorController {
     void onWindowFocusChanged(boolean hasFocus);
     void onGameStarted(GameDescription game);
     void onGamePaused(GameDescription game);
-    void connectToEmulator(int port, Emulator emulator);
+    void connectToEmulator(int port, IEmulator emulator);
     View getView();
     void onDestroy();
 
