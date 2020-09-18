@@ -519,7 +519,7 @@ int noGui = 1;
 
 int KillFCEUXonFrame = 0;
 
-int main(int argc, char *argv[]) {
+int XXmain(int argc, char *argv[]) {
 	FCEUD_Message("Starting " FCEU_NAME_AND_VERSION "...\n");
 	if(SDL_Init(SDL_INIT_VIDEO)) {
 		SDL_Log("Could not initialize SDL: %s.\n", SDL_GetError());

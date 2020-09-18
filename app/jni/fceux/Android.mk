@@ -261,7 +261,7 @@ LOCAL_SRC_FILES := \
 	#${LOCAL_PATH}/drivers/sdl-android/sdl-netplay.cpp  \
 	#${LOCAL_PATH}/drivers/sdl-android/sdl-opengl.cpp \
 
-LOCAL_SHARED_LIBRARIES := SDL2 zlib
+LOCAL_SHARED_LIBRARIES := SDL2 zlib nes
 
 LOCAL_SHORT_COMMANDS := true
 LOCAL_CFLAGS += -DPSS_STYLE=1 -DHAVE_ASPRINTF

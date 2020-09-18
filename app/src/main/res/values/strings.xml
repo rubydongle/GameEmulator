@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Game</string>
+
+
+    <string name="act_game_screenshot_failed">Failed to save screenshot</string>
+    <string name="act_game_screenshot_saved">Screenshot saved to: %s</string>
+    <string name="act_emulator_invalid_cheat">Invalid cheat: \'%s\'</string>
+    <string name="act_emulator_load_game_failed">Failed to load game</string>
+    <string name="act_emulator_save_state_failed">Failed to save state</string>
+    <string name="act_emulator_load_state_failed">Failed to load state</string>
+
+    <!-- game -->
+    <string name="game_menu_reset">RESET</string>
+    <string name="game_menu_load">LOAD STATE</string>
+    <string name="game_menu_save">SAVE STATE</string>
+    <string name="game_menu_cheats">CHEATS</string>
+    <string name="game_menu_screenshot">TAKE SCREENSHOT</string>
+    <string name="game_menu_settings">GAME SETTINGS</string>
+    <string name="game_menu_back_to_past">REWIND</string>
 </resources>

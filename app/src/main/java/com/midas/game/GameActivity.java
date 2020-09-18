@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.midas.game.core.Core;
+
 import org.libsdl.app.SDLActivity;
 
 import java.io.File;
@@ -75,6 +77,7 @@ public class GameActivity extends SDLActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Core mEmulator = Core.getInstance();
         copyGameToDataFiles();
         super.onCreate(savedInstanceState);
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
