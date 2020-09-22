@@ -4,10 +4,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Process;
 
-import com.midas.game.core.EmulatorUtils;
+import com.midas.game.utils.EmulatorUtils;
 import com.midas.game.core.GameDescription;
+import com.midas.game.emulator.element.GfxProfile;
+import com.midas.game.emulator.element.SfxProfile;
+import com.midas.game.utils.BatterySaveUtils;
 import com.midas.game.utils.FileUtils;
 import com.midas.game.utils.LogUtils;
+import com.midas.game.utils.PreferenceUtil;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -149,7 +153,7 @@ public class EmulatorRunner {
             settings.historyEnabled = PreferenceUtil.isTimeshiftEnabled(context);
             settings.loadSavFiles = PreferenceUtil.isLoadSavFiles(context);
             settings.saveSavFiles = PreferenceUtil.isSaveSavFiles(context);
-            List<SfxProfile> profiles = emulator.getInfo().getAvailableSfxProfiles();
+            List<SfxProfile> profiles = emulator.getEmulatorInfo().getAvailableSfxProfiles();
             SfxProfile sfx;
             int desiredQuality = PreferenceUtil.getEmulationQuality(context);
             settings.quality = desiredQuality;

@@ -2,9 +2,10 @@ package com.midas.game.core;
 
 import androidx.annotation.NonNull;
 
+import com.midas.game.utils.EmuUtils;
+
 import java.io.File;
 import java.io.Serializable;
-
 
 //@Table
 public class GameDescription implements Serializable, Comparable<GameDescription> {

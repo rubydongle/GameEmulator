@@ -4,10 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.midas.game.core.GameDescription;
+import com.midas.game.emulator.element.GameInfo;
+import com.midas.game.emulator.element.GfxProfile;
+import com.midas.game.emulator.element.IEmulatorInfo;
+import com.midas.game.emulator.element.SfxProfile;
 
 public interface IEmulator {
 
-    IEmulatorInfo getInfo();
+    IEmulatorInfo getEmulatorInfo();
     void start(GfxProfile cfg, SfxProfile sfx, EmulatorSettings settings);
     GfxProfile getActiveGfxProfile();
     SfxProfile getActiveSfxProfile();

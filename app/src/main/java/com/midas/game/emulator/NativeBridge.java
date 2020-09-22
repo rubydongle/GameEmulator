@@ -2,7 +2,7 @@ package com.midas.game.emulator;
 
 import android.graphics.Bitmap;
 
-public class JniBridge {
+public class NativeBridge {
     public native boolean setBaseDir(String path);
     public native boolean start(int gfx, int sfx, int general);
     public native boolean reset();

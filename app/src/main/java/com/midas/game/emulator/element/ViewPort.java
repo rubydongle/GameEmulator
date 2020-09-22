@@ -1,4 +1,4 @@
-package com.midas.game.emulator;
+package com.midas.game.emulator.element;
 
 public class ViewPort {
     public int x;

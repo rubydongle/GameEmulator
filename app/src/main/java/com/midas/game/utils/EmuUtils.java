@@ -1,4 +1,4 @@
-package com.midas.game.core;
+package com.midas.game.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,11 +14,13 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.view.Display;
 
-import com.midas.game.utils.LogUtils;
+import com.midas.game.core.GameDescription;
+import com.midas.game.emulator.SlotUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -216,9 +218,8 @@ public class EmuUtils {
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-//        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-        return false;
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public static boolean isWifiAvailable(Context context) {

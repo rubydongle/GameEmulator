@@ -7,6 +7,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 
+import com.midas.game.emulator.element.SlotInfo;
 import com.midas.game.utils.LogUtils;
 
 import java.io.File;

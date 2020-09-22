@@ -1,4 +1,7 @@
-package com.midas.game.emulator;
+package com.midas.game.emulator.element;
+
+import com.midas.game.emulator.IEmulatorController;
+import com.midas.game.emulator.KeyboardProfile;
 
 abstract public class BasicEmulatorInfo implements IEmulatorInfo {
     public boolean hasZapper() {

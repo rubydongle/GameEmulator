@@ -11,10 +11,10 @@ import android.view.View;
 
 import com.midas.game.emulator.Benchmark;
 import com.midas.game.emulator.IEmulator;
-import com.midas.game.emulator.GfxProfile;
+import com.midas.game.emulator.element.GfxProfile;
 import com.midas.game.emulator.NesGameActivity;
-import com.midas.game.emulator.ViewPort;
-import com.midas.game.emulator.ViewUtils;
+import com.midas.game.emulator.element.ViewPort;
+import com.midas.game.utils.ViewUtils;
 import com.midas.game.utils.LogUtils;
 
 import java.nio.ByteBuffer;

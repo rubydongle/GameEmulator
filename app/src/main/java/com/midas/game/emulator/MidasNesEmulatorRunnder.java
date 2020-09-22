@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.midas.game.R;
 import com.midas.game.cheats.Cheat;
-import com.midas.game.core.EmulatorUtils;
+import com.midas.game.utils.EmulatorUtils;
 import com.midas.game.core.GameDescription;
 import com.midas.game.utils.FileUtils;
 import com.midas.game.utils.LogUtils;
@@ -51,7 +51,7 @@ public class MidasNesEmulatorRunnder extends EmulatorRunner {
 
         for (String cheatChars : Cheat.getAllEnableCheats(ctx, game.checksum)) {
             if (cheatChars.contains(":")) {
-                if (EmulatorHolder.getInfo().supportsRawCheats()) {
+                if (EmulatorHolder.getmEmulatorInfo().supportsRawCheats()) {
                     int[] rawValues = null;
 
                     try {

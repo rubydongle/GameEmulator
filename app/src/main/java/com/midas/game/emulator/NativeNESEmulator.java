@@ -4,17 +4,20 @@ import android.util.SparseIntArray;
 
 import com.midas.game.core.Core;
 import com.midas.game.core.GameDescription;
+import com.midas.game.emulator.element.BasicEmulatorInfo;
+import com.midas.game.emulator.element.GfxProfile;
+import com.midas.game.emulator.element.IEmulatorInfo;
+import com.midas.game.emulator.element.SfxProfile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-public class MidasNesEmulator extends JniEmulator {
+public class NativeNESEmulator extends NativeEmulator {
 
     public static final String PACK_SUFFIX = "nness";
     private static IEmulatorInfo info;
-    private static MidasNesEmulator instance;
+    private static NativeNESEmulator instance;
     public String[] palExclusiveKeywords = new String[]{".beauty|beast",
             ".hammerin|harry", ".noah|ark", ".rockets|rivals",
             ".formula|sensation", ".trolls|crazyland", "asterix", "elite",
@@ -37,12 +40,12 @@ public class MidasNesEmulator extends JniEmulator {
             "d91a5f3e924916eb16bb6a3255f532bc",
     };
 
-    private MidasNesEmulator() {
+    private NativeNESEmulator() {
     }
 
-    public static JniEmulator getInstance() {
+    public static NativeEmulator getInstance() {
         if (instance == null) {
-            instance = new MidasNesEmulator();
+            instance = new NativeNESEmulator();
         }
         return instance;
     }
@@ -57,13 +60,13 @@ public class MidasNesEmulator extends JniEmulator {
                 || name.contains("[e]") || name.contains("[f]")
                 || name.contains("[g]") || name.contains("[i]")
                 || name.contains("[europe]") || name.contains("[pal]")) {
-            return Info.pal;
+            return NESEmulatorInfo.pal;
         } else {
             for (String pal : palExclusiveKeywords) {
                 if (pal.startsWith("$")) {
                     pal = pal.substring(1);
                     if (name.startsWith(pal)) {
-                        return Info.pal;
+                        return NESEmulatorInfo.pal;
                     }
                 } else {
                     String[] kws = new String[1];
@@ -74,37 +77,37 @@ public class MidasNesEmulator extends JniEmulator {
                     }
                     for (String keyWord : kws) {
                         if (name.contains(keyWord)) {
-                            return Info.pal;
+                            return NESEmulatorInfo.pal;
                         }
                     }
                 }
             }
         }
         if (Arrays.asList(palHashes).contains(game.checksum)) {
-            return Info.pal;
+            return NESEmulatorInfo.pal;
         }
-        return getInfo().getDefaultGfxProfile();
+        return getEmulatorInfo().getDefaultGfxProfile();
     }
 
     @Override
     public SfxProfile autoDetectSfx(GameDescription game) {
-        return getInfo().getDefaultSfxProfile();
+        return getEmulatorInfo().getDefaultSfxProfile();
     }
 
     @Override
-    public JniBridge getBridge() {
+    public NativeBridge getNativeBridge() {
         return Core.getInstance();
     }
 
     @Override
-    public IEmulatorInfo getInfo() {
+    public IEmulatorInfo getEmulatorInfo() {
         if (info == null) {
-            info = new Info();
+            info = new NESEmulatorInfo();
         }
         return info;
     }
 
-    private static class Info extends BasicEmulatorInfo {
+    private static class NESEmulatorInfo extends BasicEmulatorInfo {
         private static List<SfxProfile> sfxProfiles = new ArrayList<>();
         private static List<GfxProfile> gfxProfiles = new ArrayList<>();
         private static GfxProfile pal;

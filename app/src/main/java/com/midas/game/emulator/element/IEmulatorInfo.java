@@ -1,6 +1,10 @@
-package com.midas.game.emulator;
+package com.midas.game.emulator.element;
 
 import android.util.SparseIntArray;
+
+import com.midas.game.emulator.KeyboardProfile;
+import com.midas.game.emulator.element.GfxProfile;
+import com.midas.game.emulator.element.SfxProfile;
 
 import java.util.List;
 

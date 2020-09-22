@@ -1,9 +1,9 @@
 package com.midas.game.core;
 
 
-import com.midas.game.emulator.JniBridge;
+import com.midas.game.emulator.NativeBridge;
 
-public class Core extends JniBridge {
+public class Core extends NativeBridge {
     private static Core instance = new Core();
 
     static {

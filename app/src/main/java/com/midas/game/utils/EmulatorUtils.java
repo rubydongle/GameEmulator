@@ -1,4 +1,4 @@
-package com.midas.game.core;
+package com.midas.game.utils;
 
 import android.content.Context;
 import android.os.Environment;

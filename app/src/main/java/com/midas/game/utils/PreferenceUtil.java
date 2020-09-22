@@ -1,4 +1,4 @@
-package com.midas.game.emulator;
+package com.midas.game.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,6 +6,10 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 import com.midas.game.core.GameDescription;
+import com.midas.game.emulator.EmulatorHolder;
+import com.midas.game.emulator.IEmulator;
+import com.midas.game.emulator.element.GfxProfile;
+import com.midas.game.emulator.element.ViewPort;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -302,7 +306,7 @@ public class PreferenceUtil {
         String gfxProfileName = getVideoMode(context, emulator, game.checksum);
         GfxProfile gfx = null;
         if (gfxProfileName != null) {
-            for (GfxProfile profile : EmulatorHolder.getInfo().getAvailableGfxProfiles()) {
+            for (GfxProfile profile : EmulatorHolder.getmEmulatorInfo().getAvailableGfxProfiles()) {
                 if (profile.name.toLowerCase(Locale.ENGLISH).equals(
                         gfxProfileName.toLowerCase(Locale.ENGLISH))) {
                     gfx = profile;
@@ -320,7 +324,7 @@ public class PreferenceUtil {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String name = pref.getString("_lastGfx", null);
         try {
-            List<GfxProfile> profiles = EmulatorHolder.getInfo().getAvailableGfxProfiles();
+            List<GfxProfile> profiles = EmulatorHolder.getmEmulatorInfo().getAvailableGfxProfiles();
             for (GfxProfile profile : profiles) {
                 if (profile.name.equals(name)) {
                     return profile;
@@ -329,7 +333,7 @@ public class PreferenceUtil {
         } catch (Exception ignored) {
         }
 
-        return EmulatorHolder.getInfo().getDefaultGfxProfile();
+        return EmulatorHolder.getmEmulatorInfo().getDefaultGfxProfile();
     }
 
     public static void setLastGfxProfile(Context context, GfxProfile profile) {

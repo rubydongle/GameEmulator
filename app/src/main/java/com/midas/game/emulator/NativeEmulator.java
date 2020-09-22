@@ -10,6 +10,11 @@ import android.media.AudioTrack;
 
 import com.midas.game.R;
 import com.midas.game.core.GameDescription;
+import com.midas.game.emulator.element.GameInfo;
+import com.midas.game.emulator.element.GfxProfile;
+import com.midas.game.emulator.element.IEmulatorInfo;
+import com.midas.game.emulator.element.SfxProfile;
+import com.midas.game.utils.EmuUtils;
 import com.midas.game.utils.LogUtils;
 
 import java.io.File;
@@ -19,8 +24,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class JniEmulator implements IEmulator {
-    private static final String TAG = "JniEmulator";
+public abstract class NativeEmulator implements IEmulator {
+    private static final String TAG = "NativeEmulator";
     private static final int SIZE = 32768 * 2;
     private static Map<String, String> md5s = new HashMap<>();
     private final Object readyLock = new Object();
@@ -44,21 +49,21 @@ public abstract class JniEmulator implements IEmulator {
     private GfxProfile gfx;
     private AudioTrack track;
     private short[] sfxBuffer;
-    private JniBridge jni;
+    private NativeBridge mNativeBridge;
     private int keys;
     private int turbos = ~0;
     private int viewPortWidth;
     private int viewPortHeight;
 
-    public JniEmulator() {
-        IEmulatorInfo info = getInfo();
+    public NativeEmulator() {
+        IEmulatorInfo info = getEmulatorInfo();
         KeyboardProfile.BUTTON_NAMES = info.getDeviceKeyboardNames();
         KeyboardProfile.BUTTON_KEY_EVENT_CODES = info.getDeviceKeyboardCodes();
         KeyboardProfile.BUTTON_DESCRIPTIONS = info.getDeviceKeyboardDescriptions();
-        this.jni = getBridge();
+        this.mNativeBridge = getNativeBridge();
     }
 
-    public abstract JniBridge getBridge();
+    public abstract NativeBridge getNativeBridge();
 
     @Override
     public abstract GfxProfile autoDetectGfx(GameDescription game);
@@ -68,7 +73,7 @@ public abstract class JniEmulator implements IEmulator {
 
     @Override
     public int getHistoryItemCount() {
-        return jni.getHistoryItemCount();
+        return mNativeBridge.getHistoryItemCount();
     }
 
     @Override
@@ -78,14 +83,14 @@ public abstract class JniEmulator implements IEmulator {
 
     @Override
     public void loadHistoryState(int pos) {
-        if (!jni.loadHistoryState(pos)) {
+        if (!mNativeBridge.loadHistoryState(pos)) {
             throw new EmulatorException("load history state failed");
         }
     }
 
     @Override
     public void renderHistoryScreenshot(Bitmap bmp, int pos) {
-        if (!jni.renderHistory(bmp, pos, bmp.getWidth(), bmp.getHeight())) {
+        if (!mNativeBridge.renderHistory(bmp, pos, bmp.getWidth(), bmp.getHeight())) {
             throw new EmulatorException("render history failed");
         }
     }
@@ -115,7 +120,7 @@ public abstract class JniEmulator implements IEmulator {
             }
             this.sfx = sfx;
             this.gfx = gfx;
-            if (!jni.start(gfx.toInt(), sfx == null ? -1 : sfx.toInt(), settings.toInt())) {
+            if (!mNativeBridge.start(gfx.toInt(), sfx == null ? -1 : sfx.toInt(), settings.toInt())) {
                 throw new EmulatorException("init failed");
             }
             synchronized (loadLock) {
@@ -146,7 +151,7 @@ public abstract class JniEmulator implements IEmulator {
                 lenX[0] = 0;
                 lenX[1] = 0;
             }
-            if (!jni.reset()) {
+            if (!mNativeBridge.reset()) {
                 throw new EmulatorException("reset failed");
             }
             ready.set(true);
@@ -155,7 +160,7 @@ public abstract class JniEmulator implements IEmulator {
 
     public void setBaseDir(String path) {
         this.baseDir = path;
-        if (!jni.setBaseDir(path)) {
+        if (!mNativeBridge.setBaseDir(path)) {
             throw new EmulatorException("could not set base dir");
         }
     }
@@ -169,11 +174,11 @@ public abstract class JniEmulator implements IEmulator {
         } catch (OutOfMemoryError ignored) {
         }
         if (screen != null) {
-            if (!jni.renderVP(screen, gfx.originalScreenWidth, gfx.originalScreenHeight)) {
+            if (!mNativeBridge.renderVP(screen, gfx.originalScreenWidth, gfx.originalScreenHeight)) {
                 throw new EmulatorException(R.string.act_game_screenshot_failed);
             }
         }
-        if (!jni.saveState(fileName, slot)) {
+        if (!mNativeBridge.saveState(fileName, slot)) {
             throw new EmulatorException(R.string.act_emulator_save_state_failed);
         }
         if (screen != null) {
@@ -208,14 +213,14 @@ public abstract class JniEmulator implements IEmulator {
         if (!new File(fileName).exists()) {
             return;
         }
-        if (!jni.loadState(fileName, slot)) {
+        if (!mNativeBridge.loadState(fileName, slot)) {
             throw new EmulatorException(R.string.act_emulator_load_state_failed);
         }
     }
 
     @Override
     public void loadGame(String fileName, String batteryDir, String batterySaveFullPath) {
-        if (!jni.loadGame(fileName, batteryDir, batterySaveFullPath)) {
+        if (!mNativeBridge.loadGame(fileName, batteryDir, batterySaveFullPath)) {
             synchronized (loadLock) {
                 loadFailed = true;
                 loadLock.notifyAll();
@@ -272,7 +277,7 @@ public abstract class JniEmulator implements IEmulator {
         }
 
         if (gameInfo != null) {
-            if (!jni.readPalette(result)) {
+            if (!mNativeBridge.readPalette(result)) {
                 throw new EmulatorException("error reading palette");
             }
         }
@@ -280,7 +285,7 @@ public abstract class JniEmulator implements IEmulator {
 
     @Override
     public void setViewPortSize(int w, int h) {
-        if (!jni.setViewPortSize(w, h)) {
+        if (!mNativeBridge.setViewPortSize(w, h)) {
             throw new EmulatorException("set view port size failed");
         }
         synchronized (viewPortLock) {
@@ -303,7 +308,7 @@ public abstract class JniEmulator implements IEmulator {
                 track.release();
                 track = null;
             }
-            jni.stop();
+            mNativeBridge.stop();
             gameInfo = null;
             bitmap = null;
         }
@@ -324,7 +329,7 @@ public abstract class JniEmulator implements IEmulator {
             emuX = (int) (getActiveGfxProfile().originalScreenWidth * x);
             emuY = (int) (getActiveGfxProfile().originalScreenHeight * y);
         }
-        if (!jni.fireZapper(emuX, emuY)) {
+        if (!mNativeBridge.fireZapper(emuX, emuY)) {
             throw new EmulatorException("firezapper failed");
         }
     }
@@ -339,16 +344,16 @@ public abstract class JniEmulator implements IEmulator {
         if (fastForward && numFramesToSkip > -1) {
             numFramesToSkip = numFastForwardFrames;
         }
-        if (!jni.emulate(keys, turbos, numFramesToSkip)) {
+        if (!mNativeBridge.emulate(keys, turbos, numFramesToSkip)) {
             throw new EmulatorException("emulateframe failed");
         }
     }
 
     @Override
     public void renderGfx() {
-        if (!jni.render(bitmap)) {
+        if (!mNativeBridge.render(bitmap)) {
             createBitmap(viewPortWidth, viewPortHeight);
-            if (!jni.render(bitmap)) {
+            if (!mNativeBridge.render(bitmap)) {
                 throw new EmulatorException("render failed");
             }
         }
@@ -356,7 +361,7 @@ public abstract class JniEmulator implements IEmulator {
 
     @Override
     public void renderGfxGL() {
-        if (!jni.renderGL()) {
+        if (!mNativeBridge.renderGL()) {
             throw new EmulatorException("render failed");
         }
     }
@@ -374,14 +379,14 @@ public abstract class JniEmulator implements IEmulator {
 
     @Override
     public void enableCheat(String gg) {
-        if (!jni.enableCheat(gg, 0)) {
+        if (!mNativeBridge.enableCheat(gg, 0)) {
             throw new EmulatorException(R.string.act_emulator_invalid_cheat, gg);
         }
     }
 
     @Override
     public void enableRawCheat(int addr, int val, int comp) {
-        if (!jni.enableRawCheat(addr, val, comp)) {
+        if (!mNativeBridge.enableRawCheat(addr, val, comp)) {
             throw new EmulatorException(R.string.act_emulator_invalid_cheat, Integer.toHexString(addr)
                     + ":" + Integer.toHexString(val));
         }
@@ -389,7 +394,7 @@ public abstract class JniEmulator implements IEmulator {
 
     @Override
     public void readSfxData() {
-        int length = jni.readSfxBuffer(sfxBuffer);
+        int length = mNativeBridge.readSfxBuffer(sfxBuffer);
         int slen;
         int back;
 

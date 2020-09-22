@@ -1,4 +1,4 @@
-package com.midas.game.emulator;
+package com.midas.game.emulator.element;
 
 /**
  * Graphic effect

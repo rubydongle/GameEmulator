@@ -1,9 +1,13 @@
-package com.midas.game.emulator;
+package com.midas.game.utils;
 
 import android.content.Context;
 
-import java.util.HashMap;
+import com.midas.game.emulator.EmulatorHolder;
+import com.midas.game.emulator.IEmulator;
+import com.midas.game.emulator.element.GfxProfile;
+import com.midas.game.emulator.element.ViewPort;
 
+import java.util.HashMap;
 
 public class ViewUtils {
     private ViewUtils() {
@@ -17,7 +21,7 @@ public class ViewUtils {
             gfx = emulator.getActiveGfxProfile();
 
         } else {
-            gfx = EmulatorHolder.getInfo().getDefaultGfxProfile();
+            gfx = EmulatorHolder.getmEmulatorInfo().getDefaultGfxProfile();
         }
 
         return computeViewPort(gfx, screenWidth, screenHeight, paddingLeft,
@@ -26,7 +30,7 @@ public class ViewUtils {
 
     public static ViewPort computeInitViewPort(Context context, int w, int h,
                                                int paddingLeft, int paddingTop) {
-        GfxProfile gfx = EmulatorHolder.getInfo().getDefaultGfxProfile();
+        GfxProfile gfx = EmulatorHolder.getmEmulatorInfo().getDefaultGfxProfile();
         return ViewUtils.computeViewPort(gfx, w, h, paddingLeft, paddingTop);
     }
 
@@ -34,7 +38,7 @@ public class ViewUtils {
             Context context, int w, int h, int paddingLeft, int paddingTop) {
         HashMap<String, ViewPort> res = new HashMap<>();
 
-        for (GfxProfile profile : EmulatorHolder.getInfo()
+        for (GfxProfile profile : EmulatorHolder.getmEmulatorInfo()
                 .getAvailableGfxProfiles()) {
             ViewPort vp = computeViewPort(profile, w, h, paddingLeft,
                     paddingTop);
@@ -49,7 +53,7 @@ public class ViewUtils {
         HashMap<String, ViewPort> res = computeAllInitViewPorts(context, w, h,
                 paddingLeft, paddingTop);
 
-        for (GfxProfile profile : EmulatorHolder.getInfo()
+        for (GfxProfile profile : EmulatorHolder.getmEmulatorInfo()
                 .getAvailableGfxProfiles()) {
             ViewPort vp = loadViewPort(context, w, h, profile);
 
@@ -71,7 +75,7 @@ public class ViewUtils {
             profile = emulator.getActiveGfxProfile();
 
         } else {
-            profile = EmulatorHolder.getInfo().getDefaultGfxProfile();
+            profile = EmulatorHolder.getmEmulatorInfo().getDefaultGfxProfile();
         }
 
         if (!ignoreFullscreenSettings
@@ -96,7 +100,7 @@ public class ViewUtils {
     private static ViewPort loadViewPort(Context context, int w, int h,
                                          GfxProfile profile) {
         ViewPort vp = PreferenceUtil.getViewPort(context, w, h);
-        GfxProfile defaultProfile = EmulatorHolder.getInfo()
+        GfxProfile defaultProfile = EmulatorHolder.getmEmulatorInfo()
                 .getDefaultGfxProfile();
 
         if (vp != null && profile != defaultProfile) {
@@ -127,7 +131,7 @@ public class ViewUtils {
     public static ViewPort computeViewPort(GfxProfile gfx, int screenWidth,
                                            int screenHeight, int paddingLeft, int paddingTop) {
         if (gfx == null) {
-            gfx = EmulatorHolder.getInfo().getDefaultGfxProfile();
+            gfx = EmulatorHolder.getmEmulatorInfo().getDefaultGfxProfile();
         }
 
         int w = screenWidth - paddingLeft;

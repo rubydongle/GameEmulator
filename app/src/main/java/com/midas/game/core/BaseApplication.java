@@ -1,6 +1,5 @@
 package com.midas.game.core;
 
-
 import android.app.Application;
 
 abstract public class BaseApplication extends Application {
